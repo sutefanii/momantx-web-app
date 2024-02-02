@@ -23,7 +23,8 @@ export const Calendar = () => {
                 <h1 className="
                     text-light 
                     text-6xl 
-                    font-Unbounded 
+                    font-Unbounded
+                    font-bold
                     m-auto 
                     max-w-[1000px] 
                     lg:max-w-[680px] 

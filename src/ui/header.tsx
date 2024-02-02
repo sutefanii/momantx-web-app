@@ -11,7 +11,7 @@ export const Header = () => {
                 <nav className="flex justify-between items-center mt-16">
                     <Link href={HOME_PAGE} className="flex justify-start items-center gap-5">
                         <Image src={logoDark} alt="Logo MomantX" className="max-w-[75px] lg:max-w-[70px] sm:max-w-[58px]" />
-                        <h1 className="text-light font-Unbounded font-medium text-[32px] lg:text-[28px] sm:text-[22px]">МомантX</h1>
+                        <h1 className="text-light font-Unbounded font-bold text-[32px] lg:text-[28px] sm:text-[22px]">МомантX</h1>
                     </Link>
                     <ul className="flex gap-12 md:hidden">
                         <li>
