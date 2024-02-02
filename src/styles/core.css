@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500&family=Unbounded:wght@400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .container {
+        @apply max-w-[1300px]
+    }
+    .item-link {
+        @apply font-Montserrat-Alternates tracking-tight text-2xl lg:text-xl
+    }
+}
+
+
+.burger {
+    height: 20px;
+    position: relative;
+    width: 30px;
+}
+
+.burger-line {
+    display: flex;
+    width: 30px;
+    height: 2px;
+    background: #fff;
+    transform: .3s all ease;
+}
+
+.top-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.mid-line {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.bottom-line {
+    width: 20px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.burger.active > .top-line {
+    transform: translateY(8px) rotate(45deg);
+    transition: .3s all ease;
+}
+
+.burger.active > .mid-line {
+    opacity: 0;
+    transition: .3 all ease;
+}
+
+.burger.active > .bottom-line {
+    transform: translateY(-10px) rotate(-45deg);
+    transition: .3s all ease;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #494949;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
