@@ -1,5 +1,6 @@
+const withMT = require("@material-tailwind/react/utils/withMT");
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports = withMT({
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -28,10 +29,10 @@ module.exports = {
         lightCont: '#F8F5F5',
         mainRed: '#8A0004',
         darkCard: '#292626',
-        darkHover: '#4E1E20'
+        darkHover: '#4E1E20',
+        buttonRed: '#650205'
       }
     },
   },
   plugins: [],
-}
-
+})
