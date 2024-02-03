@@ -40,25 +40,25 @@ export default function TestPage() {
                             <li className='mb-[40px]'>
                                 <button className='flex gap-6 items-center'>
                                     <div className='w-[36px] h-[36px] rounded-full bg-dotsBg'></div>
-                                    <p className=' font-Montserrat-Alternates text-light'>Іаахім фон Рыбентроп і Іосіф Сталін</p>
+                                    <p className='text-xl font-Montserrat-Alternates text-light'>Іаахім фон Рыбентроп і Іосіф Сталін</p>
                                 </button>
                             </li>
                             <li className='mb-[40px]'>
                                 <button className='flex gap-6 items-center'>
                                     <div className='w-[36px] h-[36px] rounded-full bg-dotsBg'></div>
-                                    <p className=' font-Montserrat-Alternates text-light'>Іаахім фон Рыбентроп і Іосіф Сталін</p>
+                                    <p className='text-xl font-Montserrat-Alternates text-light'>Іаахім фон Рыбентроп і Іосіф Сталін</p>
                                 </button>
                             </li>
                             <li className='mb-[40px]'>
                                 <button className='flex gap-6 items-center'>
                                     <div className='w-[36px] h-[36px] rounded-full bg-dotsBg'></div>
-                                    <p className=' font-Montserrat-Alternates text-light'>Іаахім фон Рыбентроп і Іосіф Сталін</p>
+                                    <p className='text-xl font-Montserrat-Alternates text-light'>Іаахім фон Рыбентроп і Іосіф Сталін</p>
                                 </button>
                             </li>
                             <li className='mb-[40px]'>
                                 <button className='flex gap-6 items-center'>
                                     <div className='w-[36px] h-[36px] rounded-full bg-dotsBg'></div>
-                                    <p className=' font-Montserrat-Alternates text-light'>Іаахім фон Рыбентроп і Іосіф Сталін</p>
+                                    <p className='text-xl font-Montserrat-Alternates text-light'>Іаахім фон Рыбентроп і Іосіф Сталін</p>
                                 </button>
                             </li>
                         </ul>
