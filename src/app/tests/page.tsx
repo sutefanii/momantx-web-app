@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 
 export default function TestsPage () {
     const router = useRouter()
+    const tests = [
+        {}
+    ]
     return (
         <>
           <Header pathName='tests' />
