@@ -1,11 +1,11 @@
+'use client'
 import { Calendar } from "@/ui/calendar";
 import { Header } from "@/ui/header";
-import { useRouter } from "next/router";
 
 export default function Home() {
   return (
     <>
-      <Header />
+      <Header pathName='home' />
       <main className="mt-16">
         <section id="calendar">
           <Calendar />

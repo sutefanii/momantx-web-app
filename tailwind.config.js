@@ -30,9 +30,12 @@ module.exports = withMT({
         mainRed: '#8A0004',
         darkCard: '#292626',
         darkHover: '#4E1E20',
-        buttonRed: '#650205'
+        buttonRed: '#650205',
+        dotsBg: '#CAB0B0'
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')({ nocompatible: true }),
+  ],
 })

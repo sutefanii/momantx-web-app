@@ -1,10 +1,12 @@
 'use client'
-import { HOME_PAGE } from "@/lib/routes";
+import { HOME_PAGE, TESTS_PAGE } from "@/lib/routes";
 import logoDark from "@/styles/img/darkLogo.svg"
 import Image from "next/image"
 import Link from "next/link";
 
-export const Header = () => {
+export const Header = ({pathName}: {
+    pathName: string
+}) => {
     return (
         <header>
             <div className="container">
@@ -15,12 +17,12 @@ export const Header = () => {
                     </Link>
                     <ul className="flex gap-12 md:hidden">
                         <li>
-                            <Link className="text-mainRed item-link font-medium" href={HOME_PAGE}>
+                            <Link className={`${pathName === 'home' ? 'text-mainRed font-medium' : 'text-light'} item-link`} href={HOME_PAGE}>
                                 Календарь
                             </Link>
                         </li>
                         <li>
-                            <Link className="text-light item-link font-normal" href={HOME_PAGE}>
+                            <Link className={`${pathName === 'tests' ? 'text-mainRed font-medium' : 'text-light'} item-link`} href={TESTS_PAGE}>
                                 Тесты
                             </Link>
                         </li>
