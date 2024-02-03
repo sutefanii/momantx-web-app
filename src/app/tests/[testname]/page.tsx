@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 export default function TestPage() {
   const pathname = usePathname()
   const questions = [
-    {id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1}
+    {id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7},{id:8},{id:9},{id:10}
   ]
 
   return (
@@ -22,7 +22,7 @@ export default function TestPage() {
                 <div className=' container px-[50px]'>
                     <div className='w-full h-[100px] px-[62px] py-[25px] bg-darkCont rounded-[30px] justify-between items-center gap-[7px] flex'>
                         {questions.map(item => (
-                            <div className='flex items-center gap-[7px]'>
+                            <div key={item.id} className='flex items-center gap-[7px]'>
                                 <div className='w-[50px] h-[50px] bg-dotsBg rounded-full'></div>
                                 {item !== questions[questions.length-1] && <div className='w-[50px] h-[4px] rounded-[3px] bg-dotsBg'></div>}
                             </div>
