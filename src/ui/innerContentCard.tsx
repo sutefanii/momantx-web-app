@@ -1,11 +1,22 @@
+import { Dispatch, SetStateAction } from "react"
 import { Slider } from "./slider"
+
+export interface IDateAboutInfo {
+    images: string[]
+    date: string
+    title: string
+    text: string
+    source_link: string
+}
 
 interface IInnerContentCardProps {
     isOpen: boolean
+    dateToUse: IDateAboutInfo | null
+    isOpenInnerContentCard: Dispatch<SetStateAction<boolean>>
 }
 
 
-export const InnerContentCard = ({isOpen}: IInnerContentCardProps) => {
+export const InnerContentCard = ({isOpen, dateToUse, isOpenInnerContentCard}: IInnerContentCardProps) => {
     return (
         <div 
             className={`
@@ -14,25 +25,28 @@ export const InnerContentCard = ({isOpen}: IInnerContentCardProps) => {
                 h-[840px] 
                 absolute 
                 top-0 
+                z-50 
                 bg-darkCont 
                 transition-opacity 
                 overflow-y-scroll 
                 rounded-l-[40px]`}
             >
             <div className="min-h-[400px] pt-16 px-16">
-                <h2 className="text-light text-4xl font-Unbounded tracking-[0.72px]">30.09.1941</h2>
-                <h2 className="text-light text-4xl font-Unbounded tracking-[0.72px]">Маскоўская бітва</h2>
+                <h2 className="text-light text-4xl font-Unbounded tracking-[0.72px]">{dateToUse?.date}</h2>
+                <h2 className="text-light text-4xl font-Unbounded tracking-[0.72px]">{dateToUse?.title}</h2>
                 <div className="mt-[25px] max-w-[460px] h-[460px] rounded-[20px] bg-white mx-auto">
-                    <Slider />
+                    <Slider images={dateToUse?.images!} />
                 </div>
                 <h1 className="text-light font-Unbounded text-4xl text-center mt-9">Аб падзеі</h1>
-                <p className="text-light text-2xl font-Montserrat-Alternates leading-8 tracking-[0.44px] mt-8">Бітва за Маскву — баявыя дзеянні савецкіх і нямецкіх войскаў на маскоўскім напрамку. Дзеліцца на 2 перыяды: абарончы (30 верасня — 4 снежня 1941 года) і наступальны, які складаецца з двух этапаў: контрнаступленне (5 снежня 1941 года — 7 студзеня 1942 года) і наступленне савецкіх войскаў (7 студзеня — 30 сакавіка 1942 года). У заходняй гістарыяграфіі бітва вядомая як «Аперацыя Тайфун». 5 снежня 1941 года Чырвоная армія перайшла ў контрнаступленне па ўсім фронце пад Масквой, правёўшы пры гэтым шэраг паспяховых франтавых наступальных аперацый і адкінула ворага на 150—300 кіламетраў ад сталіцы. Бітва за Маскву — адзін з пераломных момантаў у Вялікай Айчыннай вайне.</p>
+                <p className="text-light text-2xl font-Montserrat-Alternates leading-8 tracking-[0.44px] mt-8">{dateToUse?.text}</p>
 
                 <div className="my-11 flex justify-center items-center gap-9">
-                    <button className="p-4 text-xl bg-buttonRed text-light rounded-[20px] font-Unbounded">
+                    <button onClick={() => {
+                        isOpenInnerContentCard(false)
+                    }} className="p-4 text-xl bg-buttonRed text-light rounded-[20px] font-Unbounded">
                         Схаваць
                     </button>
-                    <a href="#" className="text-mainRed font-Unbounded text-xl">
+                    <a href={dateToUse?.source_link} className="text-mainRed font-Unbounded text-xl">
                         Падрабязней
                     </a>
                 </div>

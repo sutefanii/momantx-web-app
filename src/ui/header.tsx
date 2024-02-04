@@ -3,10 +3,12 @@ import { HOME_PAGE, TESTS_PAGE } from "@/lib/routes";
 import logoDark from "@/styles/img/darkLogo.svg"
 import Image from "next/image"
 import Link from "next/link";
+import { useState } from "react";
 
 export const Header = ({pathName}: {
     pathName: string
 }) => {
+    const [isOpenChatBlock, setStateChatBlock] = useState<boolean>(false) 
     return (
         <header>
             <div className="container">
@@ -18,17 +20,22 @@ export const Header = ({pathName}: {
                     <ul className="flex gap-12 md:hidden">
                         <li>
                             <Link className={`${pathName === 'home' ? 'text-mainRed font-medium' : 'text-light'} item-link`} href={HOME_PAGE}>
-                                Календарь
+                                <span>Календарь</span>
                             </Link>
                         </li>
                         <li>
                             <Link className={`${pathName === 'tests' ? 'text-mainRed font-medium' : 'text-light'} item-link`} href={TESTS_PAGE}>
-                                Тесты
+                                <span>Тесты</span>
                             </Link>
                         </li>
                         <li>
-                            <Link className="text-light item-link font-normal" href={HOME_PAGE}>
-                                Чат
+                            <Link onClick={() => {
+                                setStateChatBlock(!isOpenChatBlock)
+                            }} className="relative text-light item-link font-normal" href={'#'}>
+                                <span>Чат</span>
+                                <div className={`${isOpenChatBlock ? 'block' : 'hidden'} absolute top-[40px] p-[10px] left-1/2 bg-darkCard transform translate-x-[-50%] w-40 h-50 rounded-lg text-xs z-50`}>
+                                    <p>Чат в настоящее время находится в стадии разработки. Мы обязательно уведомим вас о его запуске!</p>
+                                </div>
                             </Link>
                         </li>
                     </ul>

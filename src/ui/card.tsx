@@ -1,14 +1,47 @@
 "use client"
 
-import { Dispatch, MouseEventHandler, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { GetItem, IItemContent } from "@/lib/handleItems"
+import { IDateAboutInfo } from "./innerContentCard"
 
-export const Card = ({isOpen, onClick}: {
-    isOpen: boolean,
+
+interface ICardProps {
     onClick: Dispatch<SetStateAction<boolean>>
-}) => {
+    dateToResponse: Dispatch<SetStateAction<IDateAboutInfo | null>>
+    title: string
+    date: string
+    text: string
+    source_link: string
+    id: number
+}
+
+
+export const Card = ({onClick, dateToResponse, title, date, text, source_link, id}: ICardProps) => {
+    const [dateToResponseData, setDateToResponseData] = useState<IItemContent>();
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const item = await GetItem(id);
+                setDateToResponseData(item as IItemContent);
+            } catch (error) {
+                console.error("Error fetching items:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
     return (
         <div
-            onClick={() => onClick(!isOpen)}
+            onClick={() => {
+                dateToResponse({
+                    images: [...dateToResponseData?.imageReal!, ...dateToResponseData?.imageAi!],
+                    date: dateToResponseData?.date!,
+                    title: dateToResponseData?.name!,
+                    text: dateToResponseData?.text!,
+                    source_link: dateToResponseData?.source_link!
+                })
+                onClick(true)
+            }}
             className="
             max-w-[220px] 
             h-[270px] 
@@ -26,13 +59,13 @@ export const Card = ({isOpen, onClick}: {
                 text-2xl 
                 font-Montserrat-Alternates 
                 font-medium"
-            >30.09</h2>
+            >{date}</h2>
             <h3 className="
                 text-light 
                 max-w-32 
                 font-Montserrat-Alternates 
                 font-medium"
-            >Маскоўская бітва.</h3>
+            >{title}</h3>
 
             <h3 className="
                 text-light 
@@ -44,8 +77,7 @@ export const Card = ({isOpen, onClick}: {
                 text-light 
                 mt-2 
                 text-xs 
-                font-Montserrat-Alternates">
-                    Бітва за Маскву – адна з найвялікшых падзей Вялікай Айчыннай вайны. Маскоўская бітва стала першай стратэгічнай...</p>
+                font-Montserrat-Alternates">{text}</p>
         </div>
     )
 }
