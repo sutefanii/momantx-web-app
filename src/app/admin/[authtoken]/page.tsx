@@ -17,15 +17,57 @@ import { usePathname } from 'next/navigation'
 import { GetStatusToken } from "@/lib/handles/handleToken";
 import { useRouter } from "next/navigation";
 import { HOME_PAGE } from "@/lib/routes";
+import { CreateTest, DeleteTest, GetTests, ITestContent } from "@/lib/handles/handlesTests";
+import { CreateItem, DeleteItem, GetItem, GetItems, IItemContent } from "@/lib/handles/handleItems";
+import { CreateQuestion, DeleteQuestions, GetQuestions, IQuestionsContent } from "@/lib/handles/handlesQuestions";
 
 
+// Tables Info
+// ==========================================================
 enum Tables {
-    Items="Items",
-    Questions="Questions",
-    Tests="Tests",
-    Years="Years"
+    Items = "Items",
+    Questions = "Questions",
+    Tests = "Tests",
+    Years = "Years",
 }
+  
+interface IDataTableLabels {
+    label: string;
+    name: string;
+}
+  
+const TablesLabels: Record<Tables, IDataTableLabels[]> = {
+    [Tables.Items]: [
+      { label: 'id', name: 'id' },
+      { label: 'Year|year', name: 'ID Года' },
+      { label: 'date', name: 'Дата' },
+      { label: 'name', name: 'Название' },
+      { label: 'text', name: 'Текст' },
+      { label: 'source_link', name: 'Ссылка на источник' },
+      { label: '#imageReal', name: 'Картинки (Настоящие)' },
+      { label: '#imageAi', name: 'Картинки (Ai)' },
+    ],
+    [Tables.Questions]: [
+      { label: 'id', name: 'id' },
+      { label: 'Test|id', name: 'ID Теста' },
+      { label: 'correct_answer', name: 'Правильный ответ' },
+      { label: '#answers', name: 'Ответы' },
+      { label: 'title_question', name: 'Вопрос' },
+      { label: 'Item|id', name: 'ID Даты (Карточки)' },
+    ],
+    [Tables.Tests]: [
+      { label: 'id', name: 'id' },
+      { label: 'title_test', name: 'Имя теста' },
+      { label: 'image_path', name: 'Ссылка на фото' },
+    ],
+    [Tables.Years]: [
+      { label: 'id', name: 'id' },
+      { label: 'year', name: 'Год' },
+    ],
+};  
+// ==========================================================
 
+  
 export default function AdminPage() {
     const pathname = usePathname().split('/')
     const authToken = pathname[pathname.length-1]
@@ -33,15 +75,13 @@ export default function AdminPage() {
     // Router
     const router = useRouter()
 
-    // Year Fields
-    const [yearValue, setYearValue] = useState<string>()
-    const [createYear, setAcktive] = useState<boolean>(false)
-    const [isEdit, setEditState] = useState<string | null>(null)
-    const [isEditBlock, setEditBlockState] = useState<boolean>(false)
-    const [editId, setEditId] = useState<number>()
+
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+
+    const [inputValues, setInputValues] = useState({});
 
     const [tabelNow, setTableNow] = useState<Tables>(Tables.Years)
-    const [data, setData] = useState<IResponseDataYear[] | null>(null)
+    const [data, setData] = useState<any[] | null>(null)
     const [updateState, setUpdateState] = useState<boolean>(false)
 
     useEffect(() => {
@@ -55,8 +95,25 @@ export default function AdminPage() {
                     return;
                 }
 
-                const years = await GetYears();
-                setData(years as IResponseDataYear[]);
+                let dataResponse;
+                switch (tabelNow) {
+                    case Tables.Years:
+                        dataResponse = await GetYears();
+                        setData(dataResponse as IResponseDataYear[]);
+                        break;
+                    case Tables.Tests:
+                        dataResponse = await GetTests();
+                        setData(dataResponse as ITestContent[]);
+                        break;
+                    case Tables.Items:
+                        dataResponse = await GetItems();
+                        setData(dataResponse as IItemContent[])
+                        break
+                    case Tables.Questions:
+                        dataResponse = await GetQuestions();
+                        setData(dataResponse as IQuestionsContent[])
+                        break
+                }
             } catch (error) {
                 console.error("Error fetching years:", error);
             }
@@ -64,29 +121,38 @@ export default function AdminPage() {
         fetchDataToStatusTokenAndGetYears();
     }, [updateState]);
 
-    const setValueToInput = () => {
-        if (isEdit) {
-            setYearValue(isEdit)
-            setEditState(null);
+    const deleteRow = (itemID: number, callback: any) => {
+        const fetchData = async (id: number, authToken: string) => {
+            try {
+                await callback(id, authToken);
+                setUpdateState(!updateState)
+            } catch (error) {
+                console.error("Error fetching years:", error);
+            }
         }
-        return yearValue
+        fetchData(itemID, authToken)
     }
 
-    const UpdateAndCreate = async (
-        callback: (yearValue: number, authToken: string, id: number) => Promise<IResponseDataYear | null>,
-        id: number
-      ) => {
-        const fetchData = async (yearValue: number, authToken: string) => {
-          try {
-            await callback(yearValue, authToken, id);
-            setUpdateState(prevState => !prevState);
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
-        };
-    
-        fetchData(Number(yearValue), authToken);
-      };
+
+    const formatLable = (itemLabel: IDataTableLabels, item: any):string => {
+        if (itemLabel.label.includes('|')) {
+            return itemLabel.label.split("|").reduce((acc, curr) => acc && acc[curr], item) 
+        }
+        if (itemLabel.label.startsWith('#')) {
+            const label = itemLabel.label.slice(1, itemLabel.label.length)
+            const data = item[label]
+            let result = ``
+            for (const link in data) {
+                result += data[link] + '; '
+            }
+            return result
+        }
+        return item[itemLabel.label]
+    }
+
+    const resetForm = () => {
+        setInputValues({});
+    };
 
     return (
         <>
@@ -94,44 +160,130 @@ export default function AdminPage() {
             <main>
                 <div className="container">
                     <section id="tables">
+                        <div className={`${isOpen ? 'block' : 'hidden'} absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] w-[400px] min-h-[120px] bg-mainRed rounded-3xl p-[20px]`}>
+                            <h1 className="text-light text-2xl font-Unbounded">Создание нового элемента</h1>
+                            {TablesLabels[tabelNow].map((itemLabel, index) => 
+                                itemLabel.label !== "id" && (
+                                    <input
+                                        id={itemLabel.label}
+                                        placeholder={itemLabel.name}
+                                        key={index}
+                                        className="w-full my-2 border-none outline-none px-3 h-9 rounded-md font-Montserrat-Alternates"
+                                        onChange={(e) => setInputValues(prevValues => ({ ...prevValues, [itemLabel.label]: e.target.value }))}
+                                    />
+                                )
+                            )}
+                            <br />
+                            <button
+                                className="bg-light text-mainRed p-4 py-2 font-Unbounded rounded-xl mt-4"
+                                onClick={() => {
+                                    const values = Object.values(inputValues);
+                                    console.log(values)
+                                    switch (tabelNow) {
+                                        case Tables.Years:
+                                            const fetchDataCreateYear = async (yearValue: number, authToken: string) => {
+                                                try {
+                                                  await CreateYear(yearValue, authToken, 0);
+                                                  setUpdateState(prevState => !prevState);
+                                                } catch (error) {
+                                                  console.error("Error fetching data:", error);
+                                                }
+                                              };
+                                          
+                                            fetchDataCreateYear(Number(values[0]), authToken);
+                                            break
+                                        
+                                        case Tables.Tests:
+                                            const fetchDataCreateTest = async (title_test: string, image_path: string, authToken: string) => {
+                                                try {
+                                                  await CreateTest(title_test, image_path, authToken);
+                                                  setUpdateState(prevState => !prevState);
+                                                } catch (error) {
+                                                  console.error("Error fetching data:", error);
+                                                }
+                                              };
+                                          
+                                              fetchDataCreateTest(String(values[0]), String(values[1]), authToken);
+                                            break
+                                        
+                                        case Tables.Questions:
+                                            const fetchDataCreateQuestion = async (
+                                                test_id: number,
+                                                correct_answer: string,
+                                                answers: string[],
+                                                title_question: string,
+                                                item_id: number,
+                                                authToken: string
+                                            ) => {
+                                                try {
+                                                  await CreateQuestion(test_id, correct_answer, answers, title_question, item_id, authToken);
+                                                  setUpdateState(prevState => !prevState);
+                                                } catch (error) {
+                                                  console.error("Error fetching data:", error);
+                                                }
+                                              };
+                                          
+                                              fetchDataCreateQuestion(Number(values[0]), String(values[1]), String(values[2]).split(', '), String(values[3]), Number(values[4]), authToken);
+                                            break
+
+                                        case Tables.Items:
+                                            const fetchDataCreateItem = async (
+                                                year_id: number,
+                                                date: string,
+                                                name: string,
+                                                text: string,
+                                                source_link: string,
+                                                imageReal: string[],
+                                                imageAi: string[],
+                                                authToken: string
+                                            ) => {
+                                                try {
+                                                  await CreateItem(year_id, date, name, text, source_link, imageReal, imageAi, authToken);
+                                                  setUpdateState(prevState => !prevState);
+                                                } catch (error) {
+                                                  console.error("Error fetching data:", error);
+                                                }
+                                              };
+                                          
+                                            fetchDataCreateItem(Number(values[0]), String(values[1]), String(values[2]), String(values[3]), String(values[4]), String(values[5]).split(', '), String(values[6]).split(', '), authToken);
+                                            break
+                                        
+                                        default:
+                                            break
+                                    }
+                                    resetForm()
+                                    setIsOpen(false);
+                                }}
+                            >
+                                Создать
+                            </button>
+                            <button
+                                className="ml-2 bg-light text-mainRed p-4 py-2 font-Unbounded rounded-xl mt-4"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                Закрыть
+                            </button>
+                        </div>
                         <div className=" w-full mt-11">
                             <h2 className=" text-2xl font-medium font-Unbounded mb-3 text-light">Выберете таблицу:</h2>
-                            <ul className="flex justify-start gap-3">
-                                {[Tables.Items, Tables.Questions, Tables.Tests, Tables.Years].map(table => (
-                                    <li key={table}>
-                                        <button onClick={() => setTableNow(table)} className={`p-4 py-2 ${table === tabelNow ? 'bg-light text-mainRed' : 'bg-buttonRed text-light'} font-Unbounded rounded-xl`}>
-                                            {table}
-                                        </button>
-                                    </li>
-                                ))}
+                            <ul className="flex justify-between items-center">
+                                <div className="flex justify-start gap-3">
+                                    {[Tables.Items, Tables.Questions, Tables.Tests, Tables.Years].map(table => (
+                                        <li key={table}>
+                                            <button onClick={() => {
+                                                resetForm()
+                                                setTableNow(table)
+                                                setUpdateState(!updateState)
+                                            }} className={`p-4 py-2 ${table === tabelNow ? 'bg-light text-mainRed' : 'bg-buttonRed text-light'} font-Unbounded rounded-xl`}>
+                                                {table}
+                                            </button>
+                                        </li>
+                                    ))}
+                                </div>
+                                <button className="p-4 py-2 bg-buttonRed font-Unbounded rounded-xl text-light" onClick={() => setIsOpen(true)}>
+                                    Создать
+                                </button>
                             </ul>
-                        </div>
-                        <button className="my-[20px] px-3 py-2 bg-buttonRed font-Unbounded rounded-xl text-light" onClick={() => setAcktive(!createYear)}>
-                            Создать
-                        </button>
-                        <div className={`${createYear ? 'block' : 'hidden'} flex justify-start gap-4`}>
-                            <input className="my-[20px] bg-light px-2 border-none outline-none font-Unbounded rounded-xl text-darkCont"
-                                type="number"
-                                value={setValueToInput()}
-                                onChange={(e) => setYearValue(e.target.value)}
-                                placeholder="Год.." 
-                            />
-                            <button className="my-[20px] px-3 py-2 bg-buttonRed font-Unbounded rounded-xl text-light" onClick={() => {
-                                if (isEditBlock) {
-                                    UpdateAndCreate(
-                                        UpdateYear,
-                                        editId || 0
-                                    )
-                                    setEditBlockState(false)
-                                } else {
-                                    UpdateAndCreate(
-                                        CreateYear,
-                                        editId || 0
-                                    )
-                                }
-                                
-                                setAcktive(!createYear)
-                            }}>Подтвердить</button>
                         </div>
                         <div className="flex flex-col mb-14">
                             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -140,39 +292,49 @@ export default function AdminPage() {
                                         <table className="min-w-full text-left text-sm font-light">
                                         <thead className="border-b font-medium dark:border-neutral-500">
                                             <tr>
-                                                <th scope="col" className="text-light font-Montserrat-Alternates px-6 py-4">Id</th>
-                                                <th scope="col" className="text-light font-Montserrat-Alternates px-6 py-4">Year</th>
-                                                <th scope="col" className="text-light font-Montserrat-Alternates px-6 py-4">Действия</th>
+                                                {TablesLabels[tabelNow].map(itemLabel => <th scope="col" className="text-light font-Montserrat-Alternates px-6 py-4" key={itemLabel.label}>{itemLabel.name}</th>)}
+                                                <th scope="col" className="text-light font-Montserrat-Alternates overflow-x-scroll px-6 py-4">Действия</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {tabelNow === Tables.Years && data?.map(item => (
-                                                <tr key={item.id} className="border-b dark:border-neutral-500">
-                                                    <td className="px-6 py-4 font-bold">{item.id}</td>
-                                                        <td className="px-6 py-4 font-medium">{item.year}</td>
-                                                        <td className="px-6 py-4">
+                                        {data?.map(item => (
+                                            <tr key={item.id} className="border-b dark:border-neutral-500">
+                                                {TablesLabels[tabelNow].map((itemLabel, index) => (
+                                                    <td key={index} className="px-6 py-4 font-bold max-w-[500px] overflow-x-auto" data-id={itemLabel.label}> 
+                                                        {formatLable(itemLabel, item)}
+                                                    </td>
+                                                ))}
+                                                <td className="px-6 py-4">
                                                         <ul className="flex gap-2">
                                                             <li>
-                                                                <button className="py-2 px-3 rounded-lg bg-mainRed" onClick={() => {
-                                                                    setEditBlockState(true)
-                                                                    setEditId(item.id)
-                                                                    setEditState(String(item.year))
-                                                                    setAcktive(true)
+                                                                <button className="py-2 px-3 rounded-lg w-[40px] bg-mainRed" onClick={() => {
+                                                                    // setEditBlockState(true)
+                                                                    // setEditId(item.id)
+                                                                    // setEditState(String(item.year))
+                                                                    // setAcktive(true)
                                                                 }}>
                                                                     <Image width={20} src={editIcon} alt="editIcon" />
                                                                 </button>
                                                             </li>
                                                             <li>
-                                                                <button className="py-2 px-3 rounded-lg bg-mainRed" onClick={() => {
-                                                                    const fetchData = async (id: number, authToken: string) => {
-                                                                        try {
-                                                                            await DeleteYear(id, authToken);
-                                                                            setUpdateState(!updateState)
-                                                                        } catch (error) {
-                                                                            console.error("Error fetching years:", error);
-                                                                        }
+                                                                <button className="py-2 px-3 rounded-lg w-[40px] bg-mainRed" onClick={() => {
+                                                                    let callbackToDel;
+                                                                    switch (tabelNow) {
+                                                                        case Tables.Years:
+                                                                            callbackToDel = DeleteYear 
+                                                                            break
+                                                                        case Tables.Tests:
+                                                                            callbackToDel = DeleteTest 
+                                                                            break
+                                                                        case Tables.Questions:
+                                                                            callbackToDel = DeleteQuestions
+                                                                            break
+                                                                        case Tables.Items:
+                                                                            callbackToDel = DeleteItem 
+                                                                            break
+                                                                                                                              
                                                                     }
-                                                                    fetchData(item.id, authToken)
+                                                                    deleteRow(item.id, callbackToDel)
                                                                 }}>
                                                                     <Image width={20} src={deleteIcon} alt="deleteIcon" />
                                                                 </button>

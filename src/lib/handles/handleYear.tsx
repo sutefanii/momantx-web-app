@@ -3,6 +3,7 @@ import axios from "axios";
 export interface IResponseDataYear {
     id: number
     year: number
+    [key: string]: any;
 }
 
 export const GetYears = async (): Promise<IResponseDataYear[] | []> => {
