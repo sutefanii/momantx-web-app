@@ -31,7 +31,8 @@ module.exports = withMT({
         darkCard: '#292626',
         darkHover: '#4E1E20',
         buttonRed: '#650205',
-        dotsBg: '#CAB0B0'
+        dotsBg: '#CAB0B0',
+        greenTest: '#064B00'
       }
     },
   },
