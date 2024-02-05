@@ -19,7 +19,7 @@ export const GetYears = async (): Promise<IResponseDataYear[] | []> => {
     }
 };
 
-export const CreateYear = async (yearValue: number, authToken: string, _: number): Promise<IResponseDataYear | null> => {
+export const CreateYear = async (yearValue: number, authToken: string): Promise<IResponseDataYear | null> => {
     try {
         const response = await axios.post(
             "https://momantx-api-production.up.railway.app/api/years",

@@ -1,6 +1,7 @@
 'use client'
 import { Header } from '@/ui/header'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
  
 export default function TestPage() {
   const pathname = usePathname()
@@ -38,6 +39,8 @@ export default function TestPage() {
     }
   ]
 
+  const [questionNow, setQuestionNow] = useState<number>(0)
+
   return (
     <>
         <Header pathName='tests' />
@@ -53,8 +56,8 @@ export default function TestPage() {
                     <div className='w-full h-[100px] px-[62px] py-[25px] bg-darkCont rounded-[30px] justify-between items-center gap-[7px] flex'>
                         {questions.map(item => (
                             <div key={item.id} className='flex items-center gap-[7px]'>
-                                <div className='w-[50px] h-[50px] bg-dotsBg rounded-full'></div>
-                                {item !== questions[questions.length-1] && <div className='w-[50px] h-[4px] rounded-[3px] bg-dotsBg'></div>}
+                                {item !== questions[0] && <div className={`w-[50px] h-[4px] rounded-[3px] ${item.id <= questionNow ? 'bg-greenTest' : 'bg-dotsBg'} transition-colors`}></div>}
+                                <div className={`w-[50px] h-[50px] ${item.id <= questionNow ? 'bg-greenTest' : 'bg-dotsBg'} rounded-full transition-colors`}></div>
                             </div>
                             
                         ))}
@@ -92,7 +95,7 @@ export default function TestPage() {
                                 </button>
                             </li>
                         </ul>
-                        <button className='w-[280px] h-[57px] p-4 bg-buttonRed rounded-[20px] justify-center items-center gap-2.5 inline-flex '>
+                        <button className='w-[280px] h-[57px] p-4 bg-buttonRed rounded-[20px] justify-center items-center gap-2.5 inline-flex ' onClick={() => setQuestionNow(questionNow+1)}>
                             <span className='text-light text-xl font-normal font-Unbounded tracking-tight'>Наступнае пытанне</span>
                         </button>
                     </div>
