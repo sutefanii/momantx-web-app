@@ -14,8 +14,10 @@
     .test-card {
         @apply w-[340px] h-[460px] rounded-[18px] bg-blue-gray-300 basis-[340px] flex-shrink-0 cursor-pointer
     }
+    th, td {
+        @apply text-light font-Montserrat-Alternates    
+    }
 }
-
 
 .bg-test-gradient {
     background: linear-gradient(180deg, rgba(45, 0, 0, 0.50) 10%, rgba(83, 38, 38, 0.00) 38.65%), rgba(101, 2, 5, 0.15);
