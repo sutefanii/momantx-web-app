@@ -22,11 +22,14 @@ export const Slider = ({images}: {images: string[]}) => {
             </div>
           )}
         >
-          {images?.map(img => <img
-            src={img}
-            alt="image 1"
-            className="h-full w-full object-cover"
-          />)}
+          {images ? 
+            images?.map(img => <img
+              src={img}
+              alt="image 1"
+              className="h-full w-full object-cover"
+            />)
+          : <img src="" alt="" /> // Заглузка для того, чтобы не нарушать соглашение библиотеки
+        }
         </Carousel>
       );
 }

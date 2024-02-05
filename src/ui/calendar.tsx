@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react"
 import { Card } from "./card"
 import { IDateAboutInfo, InnerContentCard } from "./innerContentCard"
-import { GetItems } from "@/lib/handleItems"
-import type { IItemContent } from "@/lib/handleItems"
+import { GetItems } from "@/lib/handles/handleItems"
+import type { IItemContent } from "@/lib/handles/handleItems"
 // Icons
 import arrowLeft from "@/styles/img/angle-left.svg"
 import arrowRight from "@/styles/img/angle-right.svg"

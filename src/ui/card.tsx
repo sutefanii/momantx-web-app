@@ -1,7 +1,7 @@
 "use client"
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { GetItem, IItemContent } from "@/lib/handleItems"
+import { GetItem, IItemContent } from "@/lib/handles/handleItems"
 import { IDateAboutInfo } from "./innerContentCard"
 
 

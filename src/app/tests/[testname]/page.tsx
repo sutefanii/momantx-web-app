@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
  
 export default function TestPage() {
   const pathname = usePathname()
+  
   const questions = [
     {
         id:1
