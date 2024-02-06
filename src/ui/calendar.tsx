@@ -5,11 +5,12 @@ import { Card } from "./card"
 import { IDateAboutInfo, InnerContentCard } from "./innerContentCard"
 import { GetItems } from "@/lib/handles/handleItems"
 import type { IItemContent } from "@/lib/handles/handleItems"
+import { useSearchParams } from 'next/navigation'
+import { Loader } from "./loader"
 // Icons
 import arrowLeft from "@/styles/img/angle-left.svg"
 import arrowRight from "@/styles/img/angle-right.svg"
 import Image from "next/image"
-import { Loader } from "./loader"
 
 
 export const Calendar = () => {
@@ -20,11 +21,30 @@ export const Calendar = () => {
     // Loading
     const [isLoading, setLoading] = useState<boolean>(false)
 
+    const searchParams = useSearchParams()
+    const cardItem = searchParams.get('card')
+
+    const getStateWindow = (items: IItemContent[]) => {
+        if (cardItem) {
+            const finderItem = items.filter(item => item.slug === cardItem)[0]
+            setInfoAboutDate({
+                images: [...finderItem?.imageReal!, ...finderItem?.imageAi!],
+                date: finderItem?.date!,
+                title: finderItem?.name!,
+                text: finderItem?.text!,
+                source_link: finderItem?.source_link!
+            })
+            isOpenInnerContentCard(true)
+        }
+        return true 
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
             try {
                 const items = await GetItems();
+                getStateWindow(items)
                 const itemsForCurrentYear = items.filter(item => item.Year.year === yearNow);
                 setItemsByThisYear(itemsForCurrentYear as IItemContent[]);
             } catch (error) {

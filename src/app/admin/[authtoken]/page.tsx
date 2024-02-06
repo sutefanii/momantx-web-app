@@ -54,6 +54,7 @@ const TablesLabels: Record<Tables, IDataTableLabels[]> = {
       { label: '#answers', name: 'Ответы' },
       { label: 'title_question', name: 'Вопрос' },
       { label: 'Item|id', name: 'ID Даты (Карточки)' },
+      { label: 'question_info', name: 'Ответ' }
     ],
     [Tables.Tests]: [
       { label: 'id', name: 'id' },
@@ -160,6 +161,7 @@ export default function AdminPage() {
                                         id={itemLabel.label}
                                         placeholder={itemLabel.name}
                                         key={index}
+                                        autoComplete="off"
                                         className="w-full my-2 border-none outline-none px-3 h-9 rounded-md font-Montserrat-Alternates"
                                         onChange={(e) => setInputValues(prevValues => ({ ...prevValues, [itemLabel.label]: e.target.value }))}
                                     />
@@ -205,17 +207,18 @@ export default function AdminPage() {
                                                 answers: string[],
                                                 title_question: string,
                                                 item_id: number,
+                                                question_info: string,
                                                 authToken: string
                                             ) => {
                                                 try {
-                                                  await CreateQuestion(test_id, correct_answer, answers, title_question, item_id, authToken);
+                                                  await CreateQuestion(test_id, correct_answer, answers, title_question, item_id, question_info, authToken);
                                                   setUpdateState(prevState => !prevState);
                                                 } catch (error) {
                                                   console.error("Error fetching data:", error);
                                                 }
                                               };
                                           
-                                              fetchDataCreateQuestion(Number(values[0]), String(values[1]), String(values[2]).split(', '), String(values[3]), Number(values[4]), authToken);
+                                              fetchDataCreateQuestion(Number(values[0]), String(values[1]), String(values[2]).split(', '), String(values[3]), Number(values[4]), String(values[5]), authToken);
                                             break
 
                                         case Tables.Items:

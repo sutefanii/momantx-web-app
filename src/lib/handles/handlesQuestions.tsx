@@ -25,6 +25,7 @@ export interface IQuestionsContent  {
         slug: string
         CreatedAt: string
     }
+    question_info: string
     [key: string]: any
 }
 
@@ -47,6 +48,7 @@ export const CreateQuestion = async (
     answers: string[],
     title_question: string,
     item_id: number,
+    question_info: string,
     authToken: string
 ): Promise<IQuestionsContent | null> => {
     try {
