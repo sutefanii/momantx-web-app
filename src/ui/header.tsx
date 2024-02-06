@@ -20,12 +20,12 @@ export const Header = ({pathName}: {
                     <ul className="flex gap-12 md:hidden">
                         <li>
                             <Link className={`${pathName === 'home' ? 'text-mainRed font-medium' : 'text-light'} item-link`} href={HOME_PAGE}>
-                                <span>Календарь</span>
+                                <span>Каляндар</span>
                             </Link>
                         </li>
                         <li>
                             <Link className={`${pathName === 'tests' ? 'text-mainRed font-medium' : 'text-light'} item-link`} href={TESTS_PAGE}>
-                                <span>Тесты</span>
+                                <span>Тэсты</span>
                             </Link>
                         </li>
                         <li>
@@ -34,7 +34,7 @@ export const Header = ({pathName}: {
                             }} className="relative text-light item-link font-normal" href={'#'}>
                                 <span>Чат</span>
                                 <div className={`${isOpenChatBlock ? 'block' : 'hidden'} absolute top-[40px] p-[10px] left-1/2 bg-darkCard transform translate-x-[-50%] w-40 h-50 rounded-lg text-xs z-50`}>
-                                    <p>Чат в настоящее время находится в стадии разработки. Мы обязательно уведомим вас о его запуске!</p>
+                                    <p>Чат зараз знаходзіцца ў стадыі распрацоўкі. Мы абавязкова паведамім вам аб яго запуску!</p>
                                 </div>
                             </Link>
                         </li>

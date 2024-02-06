@@ -22,7 +22,7 @@ export const InnerContentCard = ({isOpen, dateToUse, isOpenInnerContentCard}: II
             className={`
                 ${isOpen ? 'opacity-100' : 'opacity-0 left-[calc(50%-100vw)]'} 
                 w-1/2 
-                h-[840px] 
+                h-full  
                 absolute 
                 top-0 
                 z-50 
