@@ -33,7 +33,7 @@ export default function TestsPage () {
                         {
                             testsData.length !== 0 
                             ? testsData.map(test => (
-                                <div className="test-card relative" key={test?.title_test || test.id} onClick={() => router.push(`/tests/${test.id}`)} style={{
+                                <div className="test-card relative bg-cover" key={test?.title_test || test.id} onClick={() => router.push(`/tests/${test.id}`)} style={{
                                     backgroundImage: `url(${test?.image_path})`
                                 }}>
                                     <div className="absolute w-full mt-8 z-50">
@@ -41,7 +41,9 @@ export default function TestsPage () {
                                             {test?.title_test}
                                         </h1>
                                     </div>
-                                    <div className="bg-test-gradient w-full h-full backdrop-blur-[2px]"></div>
+                                    <div className="w-full h-full" style={{
+                                        background: 'linear-gradient(180deg, rgba(45, 0, 0, 0.50) 10%, rgba(83, 38, 38, 0.00) 38.65%), rgba(101, 2, 5, 0.15)'
+                                    }}></div>
                                 </div>
                             ))
                             : <h1 className="font-Montserrat-Alternates text-center text-4xl text-light">
