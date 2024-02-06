@@ -64,14 +64,6 @@ export default function TestPage() {
           filter: questionNow === 10 ? 'blur(7.5px)' : ''
         }}
       >
-        <div 
-          className='fixed left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] w-[1090px] h-[390px] bg-darkCont z-[100]'
-          style={{
-            filter: questionNow !== 10 ? 'none' : '' // Применяем размытие к внешнему блоку только если questionNow === 10
-          }}
-        >
-          {/* Ваше содержимое здесь */}
-        </div>
         <Header pathName='tests' />
         <main>
           <section id='infoTest' className='mb-[70px]'>
