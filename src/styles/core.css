@@ -70,6 +70,7 @@
 .burger.active > .bottom-line {
     transform: translateY(-10px) rotate(-45deg);
     transition: .3s all ease;
+    width: 30px;
 }
 
 /* width */

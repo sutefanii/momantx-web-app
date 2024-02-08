@@ -9,6 +9,7 @@ export const Header = ({pathName}: {
     pathName: string
 }) => {
     const [isOpenChatBlock, setStateChatBlock] = useState<boolean>(false) 
+    const [openBurger, setStateBurger] = useState<boolean>(false)
     return (
         <header>
             <div className="container">
@@ -39,8 +40,34 @@ export const Header = ({pathName}: {
                             </Link>
                         </li>
                     </ul>
+
+
+                    <ul className={`h-full z-[100] bg-darkBg flex-col fixed right-0 top-[140px] w-full p-[60px] gap-[40px] justify-start transition-all ${openBurger ? 'right-0' : 'right-[-100vw]'}`}>
+                        <li className="mb-[40px]">
+                            <Link className={`${pathName === 'home' ? 'text-mainRed font-medium' : 'text-light'} font-Montserrat-Alternates text-[36px]`} href={HOME_PAGE}>
+                                <span>Каляндар</span>
+                            </Link>
+                        </li>
+                        <li className="mb-[40px]">
+                            <Link className={`${pathName === 'tests' ? 'text-mainRed font-medium' : 'text-light'} font-Montserrat-Alternates text-[36px]`} href={TESTS_PAGE}>
+                                <span>Тэсты</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link onClick={() => {
+                                setStateChatBlock(!isOpenChatBlock)
+                            }} className="relative text-light font-Montserrat-Alternates text-[36px] font-normal" href={'#'}>
+                                <span>Чат</span>
+                                <div className={`${isOpenChatBlock ? 'block' : 'hidden'} absolute top-[40px] p-[10px] left-0 bg-darkCard transform mt-[15px] w-40 h-50 rounded-lg text-xs z-50`}>
+                                    <p>Чат зараз знаходзіцца ў стадыі распрацоўкі. Мы абавязкова паведамім вам аб яго запуску!</p>
+                                </div>
+                            </Link>
+                        </li>
+                    </ul>
                    {/* <!-- Burger Button --> */}
-                    <button className="burger hidden md:block" >
+                    <button onClick={() => {
+                        setStateBurger(!openBurger)
+                    }} className={`burger hidden md:block ${openBurger && 'active'}`}>
                         <span className="burger-line top-line "></span>
                         <span className="burger-line mid-line "></span>
                         <span className="burger-line bottom-line "></span>

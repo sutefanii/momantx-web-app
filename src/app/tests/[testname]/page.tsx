@@ -101,18 +101,18 @@ export default function TestPage() {
         <main>
           <section id='infoTest' className='mb-[70px]'>
             <div className='container'>
-              <h1 className='text-light text-[40px] font-bold font-Unbounded mt-[70px] tracking-wide'>{questions && questions[questionNow]?.Test.title_test}</h1>
-              <p className='max-w-[995px] text-light text-2xl font-normal font-Montserrat-Alternates leading-[33px] tracking-wide'>Дадзены тэст прызначаны для паглыблення і структуравання вашых ведаў аб гэтым годзе. Усе пытанні заснаваны выключна на інфармацыі, прадстаўленай у календары.</p>
+              <h1 className='text-light text-[40px] font-bold font-Unbounded mt-[70px] md:text-[36px] md:mb-[20px] tracking-wide'>{questions && questions[questionNow]?.Test.title_test}</h1>
+              <p className='max-w-[995px] md:text-[22px] text-light text-2xl font-normal font-Montserrat-Alternates leading-[33px] tracking-wide'>Дадзены тэст прызначаны для паглыблення і структуравання вашых ведаў аб гэтым годзе. Усе пытанні заснаваны выключна на інфармацыі, прадстаўленай у календары.</p>
             </div>
           </section>
           <section id='statusTest'>
-            <div className='container px-[50px]'>
-              <div className='w-full h-[100px] px-[62px] py-[25px] bg-darkCont rounded-[30px] justify-between items-center gap-[7px] flex'>
+            <div className='container md:px-0 px-[50px]'>
+              <div className='w-full h-[100px] px-[62px] md:px-0 py-[25px] bg-darkCont rounded-[30px] justify-between items-center gap-[7px] flex'>
                     {
                         qLabel.map((item, index: number) => (
                                 <div key={item.id} className='flex items-center gap-[7px]'>
-                                  <div className={`w-[50px] h-[50px] transition-colors ${item?.isCorrect != null ? item?.isCorrect ? 'bg-greenTest' : ' bg-buttonRed' : 'bg-dotsBg'} rounded-full transition-colors`}></div>
-                                    {index < 9 && <div className={`w-[50px] h-[4px] transition-colors rounded-[3px] ${item?.isCorrect != null ? item?.isCorrect ? 'bg-greenTest' : ' bg-buttonRed' : 'bg-dotsBg'} transition-colors`}></div>}
+                                  <div className={`w-[50px] h-[50px] md:w-[20px] md:h-[20px] transition-colors ${item?.isCorrect != null ? item?.isCorrect ? 'bg-greenTest' : ' bg-buttonRed' : 'bg-dotsBg'} rounded-full transition-colors`}></div>
+                                    {index < 9 && <div className={`w-[50px] md:w-[20px] h-[4px] transition-colors rounded-[3px] ${item?.isCorrect != null ? item?.isCorrect ? 'bg-greenTest' : ' bg-buttonRed' : 'bg-dotsBg'} transition-colors`}></div>}
                                 </div>
                         ))
                     }

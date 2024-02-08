@@ -69,6 +69,9 @@ export const Calendar = () => {
             return;
         }
     }
+    
+    const [windowW, setWindowW] = useState<number>(0)
+    useEffect(() => setWindowW(window.innerWidth), [window])
 
     return (
         <div className="container mb-9">
@@ -81,10 +84,13 @@ export const Calendar = () => {
                 mx-auto 
                 lg:max-w-[884px] 
                 relative">
-                <div className="m-auto 
+                <div className="
+                    m-auto 
                     max-w-[1000px] 
                     lg:max-w-[680px] 
-                    md:max-w-[520px] flex justify-between">
+                    md:w-[520px] 
+                    flex 
+                    justify-between">
                     <h1 className="
                         text-light 
                         text-6xl 
@@ -113,19 +119,20 @@ export const Calendar = () => {
                                 dateToUse={infoAboutDate}
                                 isOpenInnerContentCard={isOpenInnerContentCard}
                             />
-                            <div className="
+                            <div className={`
+                                md:grid
+                                md:grid-cols-2
+                                md:w-[520px]
                                 grid 
-                                grid-cols-4 
+                                ${
+                                    windowW > 750 && 'lg:grid-cols-3 lg:max-w-[680px]'
+                                }
+                                grid-cols-4
                                 gap-10 
                                 mt-10 
                                 m-auto 
                                 max-w-[1000px] 
-                                lg:grid-cols-3 
-                                lg:max-w-[680px] 
-                                md:grid-cols-2 
-                                md:w-[520px] 
-                                md:gap-5 
-                                relative"
+                                relative`}
                             >
                                 {
                                     itemsByThisYear.length !== 0 ? itemsByThisYear.map(item => (

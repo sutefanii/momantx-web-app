@@ -33,7 +33,7 @@ export default function TestsPage () {
             <section id="test">
                 <div className="container mt-12">
                     <h1 className="font-Unbounded text-5xl font-bold text-light">Тесты</h1>
-                    <div className="ml-16 min-w-[calc((100vw-100%)/2+100%-4rem)] h-[500px] mt-[35px] overflow-x-auto flex justify-between gap-12 scrollbar scrollbar-thumb-gray-900 scrollbar-track-none">
+                    <div className="ml-16 md:ml-4 min-w-[calc((100vw-100%)/2+100%-4rem)] h-[500px] mt-[35px] overflow-x-auto flex justify-between gap-12 scrollbar scrollbar-thumb-gray-900 scrollbar-track-none">
                         {
                             isLoading ? <Loader />
                             : <>
