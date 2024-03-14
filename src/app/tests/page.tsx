@@ -32,15 +32,15 @@ export default function TestsPage () {
           <main className="mt-16">
             <section id="test">
                 <div className="container mt-12">
-                    <h1 className="font-Unbounded text-5xl font-bold text-light">Тесты</h1>
-                    <div className="ml-16 md:ml-4 min-w-[calc((100vw-100%)/2+100%-4rem)] h-[500px] mt-[35px] overflow-x-auto flex justify-between gap-12 scrollbar scrollbar-thumb-gray-900 scrollbar-track-none">
+                    <h1 className="font-Unbounded text-5xl font-bold text-light dark:text-[#650205]">Тесты</h1>
+                    <div className="ml-16 md:ml-4 min-w-[calc((100vw-100%)/2+100%-4rem)] h-[500px] mt-[35px] overflow-x-auto flex justify-between gap-12 scrollbar scrollbar-thumb-gray-900 dark:scrollbar-thumb-gray-200 scrollbar-track-none">
                         {
                             isLoading ? <Loader />
                             : <>
                              {
                                 testsData.length !== 0 
                                 ? testsData.map(test => (
-                                    <div className="test-card relative bg-cover " key={test?.title_test || test.id} onClick={() => router.push(`/tests/${test.id}`)} style={{
+                                    <div className="test-card relative bg-cover rounded-[18px]" key={test?.title_test || test.id} onClick={() => router.push(`/tests/${test.id}`)} style={{
                                         backgroundImage: `url(${test?.image_path})`
                                     }}>
                                         <div className="absolute w-full mt-8 z-50">
@@ -48,7 +48,7 @@ export default function TestsPage () {
                                                 {test?.title_test}
                                             </h1>
                                         </div>
-                                        <div className="w-full h-full" style={{
+                                        <div className="w-full h-full rounded-[18px]" style={{
                                             background: 'linear-gradient(180deg, rgba(45, 0, 0, 0.50) 10%, rgba(83, 38, 38, 0.00) 38.65%), rgba(101, 2, 5, 0.15)'
                                         }}></div>
                                     </div>

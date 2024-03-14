@@ -10,7 +10,10 @@ import { Loader } from "./loader"
 // Icons
 import arrowLeft from "@/styles/img/angle-left.svg"
 import arrowRight from "@/styles/img/angle-right.svg"
+import arrowLeft_Light from "@/styles/img/angle-left-light.svg"
+import arrowRight_Light from "@/styles/img/angle-right-light.svg"
 import Image from "next/image"
+import { useTheme } from "next-themes"
 
 
 export const Calendar = () => {
@@ -23,6 +26,9 @@ export const Calendar = () => {
 
     const searchParams = useSearchParams()
     const cardItem = searchParams.get('card')
+
+    const {systemTheme, theme, setTheme } = useTheme();
+    const currentTheme = theme === "system" ? systemTheme : theme ;
 
     const getStateWindow = (items: IItemContent[]) => {
         if (cardItem) {
@@ -69,9 +75,6 @@ export const Calendar = () => {
             return;
         }
     }
-    
-    const [windowW, setWindowW] = useState<number>(0)
-    useEffect(() => setWindowW(window.innerWidth), [window])
 
     return (
         <div className="container mb-9">
@@ -83,6 +86,7 @@ export const Calendar = () => {
                 py-[50px] 
                 mx-auto 
                 lg:max-w-[884px] 
+                dark:bg-[#F8F5F5]
                 relative">
                 <div className="
                     m-auto 
@@ -94,6 +98,7 @@ export const Calendar = () => {
                     <h1 className="
                         text-light 
                         text-6xl 
+                        dark:text-[#650205]
                         font-Unbounded
                         font-bold"
                     >
@@ -101,10 +106,10 @@ export const Calendar = () => {
                     </h1>
                     <div className=" w-20 flex justify-end gap-4">
                         <button className=" text-light" onClick={() => changeYear(false)}>
-                            <Image src={arrowLeft} alt="arrowLeft" />
+                            <Image src={currentTheme === "dark" ? arrowLeft_Light : arrowLeft} alt="arrowLeft" />
                         </button>
                         <button className=" text-light" onClick={() => changeYear(true)}>
-                            <Image src={arrowRight} alt="arrowRight" />
+                            <Image src={currentTheme === "dark" ? arrowRight_Light : arrowRight} alt="arrowRight" />
                         </button>
                     </div>
                 </div>
@@ -124,9 +129,8 @@ export const Calendar = () => {
                                 md:grid-cols-2
                                 md:w-[520px]
                                 grid 
-                                ${
-                                    windowW > 750 && 'lg:grid-cols-3 lg:max-w-[680px]'
-                                }
+                                lg:grid-cols-3 
+                                lg:max-w-[680px]
                                 grid-cols-4
                                 gap-10 
                                 mt-10 

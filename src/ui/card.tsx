@@ -46,22 +46,26 @@ export const Card = ({onClick, dateToResponse, title, date, text, source_link, i
             max-w-[220px] 
             h-[270px] 
             bg-darkCard 
+            dark:bg-[#FFFFFF]
             rounded-[15px] 
             py-5 
             px-[15px] 
             hover:bg-darkHover 
+            dark:hover:bg-[#D8C0C0]
             transition-colors 
             cursor-pointer 
             select-none"
         >
             <h2 className="
                 text-light 
+                dark:text-[#3D0103]
                 text-2xl 
                 font-Montserrat-Alternates 
                 font-medium"
             >{date}</h2>
             <h3 className="
                 text-light 
+                dark:text-[#3D0103]
                 max-w-32 
                 font-Montserrat-Alternates 
                 font-medium"
@@ -69,12 +73,14 @@ export const Card = ({onClick, dateToResponse, title, date, text, source_link, i
 
             <h3 className="
                 text-light 
+                dark:text-[#3D0103]
                 mt-10 
                 font-Montserrat-Alternates 
                 font-medium">
                     Аб падзеі</h3>
             <p className="
                 text-light 
+                dark:text-[#3D0103]
                 mt-2 
                 text-xs 
                 font-Montserrat-Alternates">{text}</p>

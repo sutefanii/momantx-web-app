@@ -62,12 +62,12 @@ export default function TestPage() {
     return (
       <>
       {
-        questionNow === 10 && <div className={` transition-opacity fixed left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] w-[1090px] bg-darkCont z-50 rounded-[40px] ${questionNow === 10 ? ' opacity-100' : ' opacity-0'}`}>
+        questionNow === 10 && <div className={` transition-opacity fixed left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] w-[1090px] bg-darkCont dark:bg-[#F8F5F5] z-50 rounded-[40px] ${questionNow === 10 ? ' opacity-100' : ' opacity-0'}`}>
         <div className='p-[45px]'>
           <h1 className='text-mainRed font-Unbounded text-[32px]'>{result} з 10</h1>
-          <h1 className=' font-Unbounded text-light text-[32px]'>Дакладных адказаў!</h1>
+          <h1 className=' font-Unbounded text-light dark:text-darkHover text-[32px]'>Дакладных адказаў!</h1>
           <div className=' mt-[25px] mb-[45px] pt-[25px] border-t-[2px] border-t-buttonRed'>
-            <p className=' text-[24px] font-Montserrat-Alternates text-light'>
+            <p className=' text-[24px] dark:text-darkHover font-Montserrat-Alternates text-light'>
               {
                 result <= 4 && <>Дрэнныя вынікі могуць быць выдатным стымулам для паляпшэння. Разбярыцеся, у чым заключаюцца вашыя слабыя бакі, і працуйце над імі.</>
               }
@@ -101,18 +101,18 @@ export default function TestPage() {
         <main>
           <section id='infoTest' className='mb-[70px]'>
             <div className='container'>
-              <h1 className='text-light text-[40px] font-bold font-Unbounded mt-[70px] md:text-[36px] md:mb-[20px] tracking-wide'>{questions && questions[questionNow]?.Test.title_test}</h1>
-              <p className='max-w-[995px] md:text-[22px] text-light text-2xl font-normal font-Montserrat-Alternates leading-[33px] tracking-wide'>Дадзены тэст прызначаны для паглыблення і структуравання вашых ведаў аб гэтым годзе. Усе пытанні заснаваны выключна на інфармацыі, прадстаўленай у календары.</p>
+              <h1 className='text-light text-[40px] font-bold font-Unbounded mt-[70px] md:text-[36px] md:mb-[20px] tracking-wide dark:text-darkHover'>{questions && questions[questionNow]?.Test.title_test}</h1>
+              <p className='max-w-[995px] md:text-[22px] text-light text-2xl font-normal font-Montserrat-Alternates leading-[33px] dark:text-darkHover tracking-wide'>Дадзены тэст прызначаны для паглыблення і структуравання вашых ведаў аб гэтым годзе. Усе пытанні заснаваны выключна на інфармацыі, прадстаўленай у календары.</p>
             </div>
           </section>
           <section id='statusTest'>
             <div className='container md:px-0 px-[50px]'>
-              <div className='w-full h-[100px] px-[62px] md:px-0 py-[25px] bg-darkCont rounded-[30px] justify-between items-center gap-[7px] flex'>
+              <div className='w-full h-[100px] px-[62px] md:px-0 py-[25px] bg-darkCont dark:bg-[#F8F5F5] rounded-[30px] justify-between items-center gap-[7px] flex'>
                     {
                         qLabel.map((item, index: number) => (
                                 <div key={item.id} className='flex items-center gap-[7px]'>
-                                  <div className={`w-[50px] h-[50px] md:w-[20px] md:h-[20px] transition-colors ${item?.isCorrect != null ? item?.isCorrect ? 'bg-greenTest' : ' bg-buttonRed' : 'bg-dotsBg'} rounded-full transition-colors`}></div>
-                                    {index < 9 && <div className={`w-[50px] md:w-[20px] h-[4px] transition-colors rounded-[3px] ${item?.isCorrect != null ? item?.isCorrect ? 'bg-greenTest' : ' bg-buttonRed' : 'bg-dotsBg'} transition-colors`}></div>}
+                                  <div className={`w-[50px] h-[50px] md:w-[20px] md:h-[20px] transition-colors ${item?.isCorrect != null ? item?.isCorrect ? 'bg-greenTest dark:bg-[#0d8003]' : ' bg-buttonRed dark:bg-[#8a0307]' : 'bg-dotsBg'} rounded-full transition-colors`}></div>
+                                    {index < 9 && <div className={`w-[50px] md:w-[20px] h-[4px] transition-colors rounded-[3px] ${item?.isCorrect != null ? item?.isCorrect ? 'bg-greenTest dark:bg-[#0d8003]' : ' bg-buttonRed dark:bg-[#8a0307]' : 'bg-dotsBg'} transition-colors`}></div>}
                                 </div>
                         ))
                     }
@@ -121,9 +121,9 @@ export default function TestPage() {
             </section>
             <section id='questionForm' className='mt-[50px]'>
                 <div className='container'>
-                    <div className='w-full mb-[50px] py-[45px] px-[40px] bg-darkCont rounded-[40px]'>
-                        <p className='text-mainRed font-Montserrat-Alternates text-2xl'>Пытанне {questionNow+1} з 10</p>
-                        <h2 className='text-[28px] font-Montserrat-Alternates mt-2 text-light'>{questions && questions[questionNow] && questions[questionNow].title_question}</h2>
+                    <div className='w-full mb-[50px] py-[45px] px-[40px] bg-darkCont dark:bg-[#F8F5F5] rounded-[40px]'>
+                        <p className='text-mainRed font-Montserrat-Alternates text-2xl dark:text-darkHover'>Пытанне {questionNow+1} з 10</p>
+                        <h2 className='text-[28px] font-Montserrat-Alternates mt-2 dark:text-darkHover text-light'>{questions && questions[questionNow] && questions[questionNow].title_question}</h2>
                         <ul className='mt-[45px] ml-[20px]'>
                             {
                               isLoading
@@ -143,11 +143,9 @@ export default function TestPage() {
                                             qLabel[questionNow].isCorrect = false
                                           }
                                           setQLabel(qLabel)
-                                          console.log(qLabel)
-                                          console.log(result)
                                       }} className='flex gap-6 items-center'>
-                                          <div className={`w-[36px] h-[36px] rounded-full ${answerL != null ? answer.replaceAll(' ', '')===questions[questionNow].correct_answer.replaceAll(' ', '') ? ' bg-greenTest' : ' bg-buttonRed' : 'bg-dotsBg'} `}></div>
-                                          <p className='text-xl font-Montserrat-Alternates text-light max-w-[900px] text-left'>{answer}</p>
+                                          <div className={`w-[36px] h-[36px] rounded-full ${answerL != null ? answer.replaceAll(' ', '')===questions[questionNow].correct_answer.replaceAll(' ', '') ? ' bg-greenTest dark:bg-[#0d8003]' : ' bg-buttonRed dark:bg-[#8a0307]' : 'bg-dotsBg'} `}></div>
+                                          <p className='text-xl font-Montserrat-Alternates text-light max-w-[900px] dark:text-darkHover text-left'>{answer}</p>
                                       </button>
                                   </li>
                               ))}
@@ -165,8 +163,8 @@ export default function TestPage() {
                             <span className='text-light text-xl font-normal font-Unbounded tracking-tight'>Наступнае пытанне</span>
                         </button>
                     </div>
-                    {qLabel[questionNow]?.isCorrect != null && <div className='w-full mb-32 p-10 bg-darkCont rounded-[40px]'>
-                      <p className=' text-light text-2xl font-normal font-Montserrat-Alternates leading-[33px]'>{questions && questions[questionNow] && questions[questionNow]?.question_info}</p>
+                    {qLabel[questionNow]?.isCorrect != null && <div className='w-full mb-32 p-10 bg-darkCont dark:bg-[#F8F5F5] rounded-[40px]'>
+                      <p className='dark:text-darkHover text-light text-2xl font-normal font-Montserrat-Alternates leading-[33px]'>{questions && questions[questionNow] && questions[questionNow]?.question_info}</p>
                       <Link href={HOME_PAGE + `?card=${questions && questions[questionNow].Item.slug}`} className='text-[#8A0004] text-[20px] tracking-[0px] font-Unbounded mt-[5px]'>
                         Перайсці да даты
                       </Link>
